@@ -2,6 +2,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
+import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
 import axios from 'axios'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -245,4 +246,10 @@ export default function AddQuestionDialog ({
       </Formik>
     </Dialog>
   )
+}
+
+AddQuestionDialog.propTypes = {
+  openAddDialog: PropTypes.func.isRequired,
+  getQuestions: PropTypes.func.isRequired,
+  handleAddDialogOpen: PropTypes.func.isRequired
 }

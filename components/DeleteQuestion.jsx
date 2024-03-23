@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { useState } from 'react'
@@ -101,4 +102,11 @@ export default function DeleteQuestionDialog ({
       </Stack>
     </Dialog>
   )
+}
+
+DeleteQuestionDialog.propTypes = {
+  handleDelQuestDialogOpen: PropTypes.func.isRequired,
+  openDelQuestDialog: PropTypes.func.isRequired,
+  getQuestions: PropTypes.func.isRequired,
+  delQuestion: PropTypes.string.isRequired
 }

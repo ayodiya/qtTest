@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button'
+import PropTypes from 'prop-types'
 
 export default function ButtonCom ({
   backgroundColor,
@@ -40,4 +41,17 @@ export default function ButtonCom ({
       {text}
     </Button>
   )
+}
+
+ButtonCom.propTypes = {
+  backgroundColor: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  borderRadius: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  fontSize: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  borderColor: PropTypes.string.isRequired,
+  variant: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 }

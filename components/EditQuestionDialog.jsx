@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
@@ -31,6 +32,8 @@ export default function EditQuestionDialog ({
   editQuestion,
   getQuestions
 }) {
+  console.log('this is editQuestion', editQuestion)
+
   return (
     <Dialog
       sx={{
@@ -248,4 +251,18 @@ export default function EditQuestionDialog ({
       </Formik>
     </Dialog>
   )
+}
+
+EditQuestionDialog.propTypes = {
+  openEditDialog: PropTypes.func.isRequired,
+  handleEditDialogOpen: PropTypes.func.isRequired,
+  editQuestion: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string, // Expects a string
+      PropTypes.shape({
+        options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired // Expects an object with options (array of strings) property
+      })
+    ])
+  ).isRequired,
+  getQuestions: PropTypes.func.isRequired
 }
