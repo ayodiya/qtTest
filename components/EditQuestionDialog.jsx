@@ -2,8 +2,10 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
+import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress'
 import CancelIcon from '@mui/icons-material/Cancel'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { Formik } from 'formik'
 
 import InputField from '@/components/InputField'
@@ -26,9 +28,9 @@ import addQuestionFormValidator, {
 export default function EditQuestionDialog ({
   openEditDialog,
   handleEditDialogOpen,
-  editQuestion
+  editQuestion,
+  getQuestions
 }) {
-  console.log('thuis is fjf', editQuestion[1]?.question)
   return (
     <Dialog
       sx={{
@@ -66,9 +68,36 @@ export default function EditQuestionDialog ({
           [OPTIONS5]: editQuestion[1]?.options[4]
         }}
         validationSchema={addQuestionFormValidator}
-        // onSubmit={async (values, { isSubmitting, resetForm }) => {
+        onSubmit={async (values, { isSubmitting, resetForm }) => {
+          try {
+            const dataToSubmit = {
+              question: values[QUESTION],
+              options: [
+                values[OPTIONS1],
+                values[OPTIONS2],
+                values[OPTIONS3],
+                values[OPTIONS4],
+                values[OPTIONS5]
+              ]
+            }
+            await axios.put(
+              `${process.env.NEXT_PUBLIC_API_URL}/questions/${editQuestion[0]}`,
+              dataToSubmit,
+              {
+                headers: {
+                  Token: localStorage.getItem('qtToken'),
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
 
-        // }}
+            Notify.success('Question edited successfully')
+            handleEditDialogOpen()
+            getQuestions()
+          } catch (error) {
+            Notify.failure('Server error, please try again')
+          }
+        }}
       >
         {({
           handleChange,

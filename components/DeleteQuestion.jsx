@@ -1,32 +1,49 @@
+'use client'
+
 import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
+import axios from 'axios'
 import CircularProgress from '@mui/material/CircularProgress'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
+import { useState } from 'react'
+
 import CancelIcon from '@mui/icons-material/Cancel'
-
-import InputField from '@/components/InputField'
 import Button from '@/components/Button'
-import addQuestionFormValidator, {
-  QUESTION,
-  QUESTION_LABEL,
-  OPTIONS1,
-  OPTIONS1_LABEL,
-  OPTIONS2,
-  OPTIONS2_LABEL,
-  OPTIONS3,
-  OPTIONS3_LABEL,
-  OPTIONS4,
-  OPTIONS4_LABEL,
-  OPTIONS5,
-  OPTIONS5_LABEL
-} from '@/validators/addQuestionFormValidator'
 
-export default function EditQuestionDialog ({
+export default function DeleteQuestionDialog ({
   handleDelQuestDialogOpen,
   openDelQuestDialog,
+  getQuestions,
   delQuestion
 }) {
+  const [loading, setLoading] = useState(false)
+
+  const handleDelQuest = async () => {
+    setLoading(true)
+
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/questions/${delQuestion}`,
+        {
+          headers: {
+            Token: localStorage.getItem('qtToken'),
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      Notify.success('Question deleted successfully')
+      handleDelQuestDialogOpen()
+      getQuestions()
+    } catch (error) {
+      console.log('this is error', error)
+      Notify.failure('Server error, please try again')
+    }
+    setLoading(false)
+  }
+
   return (
     <Dialog
       sx={{
@@ -75,7 +92,8 @@ export default function EditQuestionDialog ({
         </Box>
         <Box>
           <Button
-            text='Yes'
+            onClick={() => handleDelQuest()}
+            text={loading ? <CircularProgress /> : 'Yes'}
             variant='contained'
             backgroundColor='primary.main'
           />

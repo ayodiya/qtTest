@@ -3,8 +3,10 @@ import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import CircularProgress from '@mui/material/CircularProgress'
+import axios from 'axios'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { Formik } from 'formik'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
 
 import InputField from '@/components/InputField'
 import Button from '@/components/Button'
@@ -34,6 +36,7 @@ const initialValues = {
 
 export default function AddQuestionDialog ({
   openAddDialog,
+  getQuestions,
   handleAddDialogOpen
 }) {
   return (
@@ -66,9 +69,38 @@ export default function AddQuestionDialog ({
       <Formik
         initialValues={initialValues}
         validationSchema={addQuestionFormValidator}
-        // onSubmit={async (values, { isSubmitting, resetForm }) => {
+        onSubmit={async (values, { isSubmitting, resetForm }) => {
+          try {
+            const dataToSubmit = {
+              question: values[QUESTION],
+              options: [
+                values[OPTIONS1],
+                values[OPTIONS2],
+                values[OPTIONS3],
+                values[OPTIONS4],
+                values[OPTIONS5]
+              ]
+            }
+            await axios.post(
+              `${process.env.NEXT_PUBLIC_API_URL}/questions`,
+              dataToSubmit,
+              {
+                headers: {
+                  Token: localStorage.getItem('qtToken'),
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
 
-        // }}
+            Notify.success('Question added successfully')
+            handleAddDialogOpen()
+            getQuestions()
+          } catch (error) {
+            Notify.failure('Server error, please try again')
+          }
+
+          resetForm()
+        }}
       >
         {({
           handleChange,
