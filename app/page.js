@@ -56,7 +56,9 @@ export default function Home () {
               display: 'flex',
               justifyContent: 'center',
               fontSize: '24px',
-              fontWeight: 700
+              fontWeight: 700,
+              paddingTop: { xs: '40px' },
+              paddingBottom: { xs: '40px' }
             }}
           >
             Questions
