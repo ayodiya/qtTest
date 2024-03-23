@@ -14,7 +14,11 @@ export default function InputField ({
   ...props
 }) {
   return (
-    <Box>
+    <Box
+      sx={{
+        width: '100%'
+      }}
+    >
       <TextField
         sx={{
           '& .MuiInputBase-input': {
