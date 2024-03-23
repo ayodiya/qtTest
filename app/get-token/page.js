@@ -4,7 +4,11 @@ import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
+import axios from 'axios'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { Formik } from 'formik'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 import InputField from '@/components/InputField'
 import Button from '@/components/Button'
@@ -18,6 +22,14 @@ const initialValues = {
 }
 
 export default function GetToken () {
+  const { push } = useRouter()
+
+  useEffect(() => {
+    if (localStorage.getItem('qtToken')) {
+      push('/')
+    }
+  }, [])
+
   return (
     <>
       <Container maxWidth='lg'>
@@ -60,9 +72,19 @@ export default function GetToken () {
               <Formik
                 initialValues={initialValues}
                 validationSchema={getTokenFormValidator}
-                // onSubmit={async (values, { isSubmitting, resetForm }) => {
-
-                // }}
+                onSubmit={async (values, { isSubmitting, resetForm }) => {
+                  try {
+                    const { data } = await axios.post(
+                      `${process.env.NEXT_PUBLIC_API_URL}/token`,
+                      values
+                    )
+                    localStorage.setItem('qtToken', data.token)
+                    Notify.success('Token gotten successfully')
+                    push('/')
+                  } catch (error) {
+                    Notify.failure('Server error, please try again')
+                  }
+                }}
               >
                 {({
                   handleChange,

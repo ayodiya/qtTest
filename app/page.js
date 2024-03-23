@@ -3,7 +3,8 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 import questionExamples from '@/utils/questionExamples'
 import Button from '@/components/Button'
@@ -21,11 +22,18 @@ export default function Home () {
   const [openDelQuestDialog, setOpenDelQuestDialog] = useState(false)
   const [editQuestion, setEditQuestion] = useState('')
   const [delQuestion, setDelQuestion] = useState('')
+  const { push } = useRouter()
 
   const handleAddDialogOpen = () => setOpenAddDialog(!openAddDialog)
   const handleEditDialogOpen = () => setOpenEditDialog(!openEditDialog)
   const handleDelQuestDialogOpen = () =>
     setOpenDelQuestDialog(!openDelQuestDialog)
+
+  useEffect(() => {
+    if (localStorage.getItem('qtToken') === null) {
+      push('/get-token')
+    }
+  }, [])
 
   return (
     <>
