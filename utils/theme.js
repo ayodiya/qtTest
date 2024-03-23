@@ -18,6 +18,12 @@ const theme = createTheme({
     },
     secondary: {
       main: '#c38d9e'
+    },
+    questionColor: {
+      main: '#4056a1'
+    },
+    dangerColor: {
+      main: '#f13c20'
     }
   }
 })

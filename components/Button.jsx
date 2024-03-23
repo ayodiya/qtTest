@@ -9,6 +9,7 @@ export default function ButtonCom ({
   width,
   borderColor,
   variant,
+  height,
   type,
   ...props
 }) {
@@ -25,6 +26,7 @@ export default function ButtonCom ({
         borderColor,
         color,
         fontSize,
+        height,
         textTransform: 'none',
         padding: '10px 20px',
         backgroundColor,
