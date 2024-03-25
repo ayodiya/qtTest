@@ -51,7 +51,6 @@ export default function Home () {
         setQuestions(data)
       }
     } catch (error) {
-      console.log('this error', error)
       if (error?.response?.data?.status === 401) {
         Notify.info('Please login')
       }

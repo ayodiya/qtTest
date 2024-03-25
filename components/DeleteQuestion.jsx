@@ -39,7 +39,6 @@ export default function DeleteQuestionDialog ({
       handleDelQuestDialogOpen()
       getQuestions()
     } catch (error) {
-      console.log('this is error', error)
       Notify.failure('Server error, please try again')
     }
     setLoading(false)
