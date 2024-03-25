@@ -51,10 +51,11 @@ export default function Home () {
         setQuestions(data)
       }
     } catch (error) {
-      if (error?.response?.data?.status === 401) {
+      if (error?.response?.status === 401) {
         Notify.info('Please login')
+      } else {
+        Notify.failure('Server error, please try again')
       }
-      Notify.failure('Server error, please try again')
     }
     setLoading(false)
   }
