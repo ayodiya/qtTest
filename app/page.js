@@ -8,7 +8,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
-import questionExamples from '@/utils/questionExamples'
 import Button from '@/components/Button'
 import AddQuestionDialog from '@/components/AddQuestionDialog'
 import EditQuestionDialog from '@/components/EditQuestionDialog'
@@ -37,15 +36,12 @@ export default function Home () {
     setLoading(true)
 
     try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/questions`,
-        {
-          headers: {
-            Token: localStorage.getItem('qtToken'),
-            'Content-Type': 'application/json'
-          }
+      const { data } = await axios.get(`${process.env.API_URL}/questions`, {
+        headers: {
+          Token: localStorage.getItem('qtToken'),
+          'Content-Type': 'application/json'
         }
-      )
+      })
       if (data === null) {
         setQuestions({})
       } else {

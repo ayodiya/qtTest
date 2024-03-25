@@ -84,7 +84,7 @@ export default function EditQuestionDialog ({
               ]
             }
             await axios.put(
-              `${process.env.NEXT_PUBLIC_API_URL}/questions/${editQuestion[0]}`,
+              `${process.env.API_URL}/questions/${editQuestion[0]}`,
               dataToSubmit,
               {
                 headers: {

@@ -75,7 +75,7 @@ export default function GetToken () {
                 onSubmit={async (values, { isSubmitting, resetForm }) => {
                   try {
                     const { data } = await axios.post(
-                      `${process.env.NEXT_PUBLIC_API_URL}/token`,
+                      `${process.env.API_URL}/token`,
                       values
                     )
                     localStorage.setItem('qtToken', data.token)

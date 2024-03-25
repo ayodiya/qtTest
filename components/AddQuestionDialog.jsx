@@ -82,16 +82,12 @@ export default function AddQuestionDialog ({
                 values[OPTIONS5]
               ]
             }
-            await axios.post(
-              `${process.env.NEXT_PUBLIC_API_URL}/questions`,
-              dataToSubmit,
-              {
-                headers: {
-                  Token: localStorage.getItem('qtToken'),
-                  'Content-Type': 'application/json'
-                }
+            await axios.post(`${process.env.API_URL}/questions`, dataToSubmit, {
+              headers: {
+                Token: localStorage.getItem('qtToken'),
+                'Content-Type': 'application/json'
               }
-            )
+            })
 
             Notify.success('Question added successfully')
             handleAddDialogOpen()
