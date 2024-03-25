@@ -32,8 +32,6 @@ export default function EditQuestionDialog ({
   editQuestion,
   getQuestions
 }) {
-  console.log('this is editQuestion', editQuestion)
-
   return (
     <Dialog
       sx={{
