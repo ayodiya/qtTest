@@ -25,12 +25,15 @@ export default function DeleteQuestionDialog ({
     setLoading(true)
 
     try {
-      await axios.delete(`${process.env.API_URL}/questions/${delQuestion}`, {
-        headers: {
-          Token: localStorage.getItem('qtToken'),
-          'Content-Type': 'application/json'
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/questions/${delQuestion}`,
+        {
+          headers: {
+            Token: localStorage.getItem('qtToken'),
+            'Content-Type': 'application/json'
+          }
         }
-      })
+      )
 
       Notify.success('Question deleted successfully')
       handleDelQuestDialogOpen()
